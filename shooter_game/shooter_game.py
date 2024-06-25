@@ -36,24 +36,24 @@ grenade_thrown = False
 
 
 # load images
-pine1_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\Background\pine1.png").convert_alpha()
-pine2_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\Background\pine2.png").convert_alpha()
-mountain_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\Background\mountain.png").convert_alpha()
-sky_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\Background\sky_cloud.png").convert_alpha()
+pine1_img = pygame.image.load(r".\Background\pine1.png").convert_alpha()
+pine2_img = pygame.image.load(r".\Background\pine2.png").convert_alpha()
+mountain_img = pygame.image.load(r".\Background\mountain.png").convert_alpha()
+sky_img = pygame.image.load(r".\Background\sky_cloud.png").convert_alpha()
 # store tiles in a list
 img_list = []
 for x in range(TILE_TYPES):
-    img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\tile\{}.png".format(x))
+    img = pygame.image.load(r".\tile\{}.png".format(x))
     img = pygame.transform.scale(img, (TILE_SIZE, TILE_SIZE))
     img_list.append(img)
 # bullet
-bullet_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\icons\bullet.png").convert_alpha()
+bullet_img = pygame.image.load(r".\icons\bullet.png").convert_alpha()
 # grenade
-grenade_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\icons\grenade.png").convert_alpha()
+grenade_img = pygame.image.load(r".\icons\grenade.png").convert_alpha()
 # pick up boxes
-health_box_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\icons\health_box.png").convert_alpha()
-ammo_box_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\icons\ammo_box.png").convert_alpha()
-grenade_box_img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\icons\grenade_box.png").convert_alpha()
+health_box_img = pygame.image.load(r".\icons\health_box.png").convert_alpha()
+ammo_box_img = pygame.image.load(r".\icons\ammo_box.png").convert_alpha()
+grenade_box_img = pygame.image.load(r".\icons\grenade_box.png").convert_alpha()
 item_boxes = {
     "Health": health_box_img,
     "Ammo": ammo_box_img,
@@ -119,9 +119,9 @@ class Soldier(pygame.sprite.Sprite):
             # reset temporary list of images
             temp_list = []
             # count number of files in the folder
-            num_of_frames = len(os.listdir(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\{}\{}".format(self.char_type, animation)))
+            num_of_frames = len(os.listdir(r".\{}\{}".format(self.char_type, animation)))
             for i in range(num_of_frames):
-                img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\{0}\{1}\img.{2}.{3}.{4}.png".format(self.char_type, animation, self.char_type, animation, i)).convert_alpha()
+                img = pygame.image.load(r".\{0}\{1}\img.{2}.{3}.{4}.png".format(self.char_type, animation, self.char_type, animation, i)).convert_alpha()
                 img = pygame.transform.scale(img, (int(img.get_width() * scale), int(img.get_height() * scale)))
                 temp_list.append(img)
             self.animation_list.append(temp_list)
@@ -230,7 +230,7 @@ class Soldier(pygame.sprite.Sprite):
                 self.update_action(0)  # 0: idle
                 # shoot
                 self.shoot()
-                pygame.draw.rect(screen, RED, self.vision, 1)
+              #  pygame.draw.rect(screen, RED, self.vision, 1)
             else:
 
                 if self.idling == False:
@@ -244,7 +244,7 @@ class Soldier(pygame.sprite.Sprite):
                     self.move_counter += 1
                     # update ai vision as the enemy moves
                     self.vision.center = (self.rect.centerx + 75 * self.direction, self.rect.centery)
-                    pygame.draw.rect(screen, RED, self.vision, 1)
+               #     pygame.draw.rect(screen, RED, self.vision, 1)
 
 
                     if self.move_counter > TILE_SIZE:
@@ -525,7 +525,7 @@ class Explosion(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.images = []
         for num in range(1, 6):
-            img = pygame.image.load(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\explosion\exp{0}.png".format(num))
+            img = pygame.image.load(r".\explosion\exp{0}.png".format(num))
             img = pygame.transform.scale(img, (img.get_width() * scale, img.get_height() * scale))
             self.images.append(img)
         self.frame_index = 0
@@ -571,7 +571,7 @@ for row in range(ROWS):
     r = [-1] * COLS
     world_data.append(r)
 # load in level data and create world
-with open(r"C:\Eitan\Python\pythonProject\tank_game\shooter_game\levels\level{}_data.csv".format(level), newline="") as csvfile:
+with open(r".\levels\level{}_data.csv".format(level), newline="") as csvfile:
     reader = csv.reader(csvfile, delimiter=",")
     for x, row in enumerate(reader):
         for y, tile in enumerate(row):
