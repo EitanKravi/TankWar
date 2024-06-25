@@ -71,6 +71,7 @@ BLACK = (0, 0, 0)
 # define font
 font = pygame.font.SysFont("Futura", 30)
 
+
 def draw_text(text, font, text_col, x, y):
     img = font.render(text, True, text_col)
     screen.blit(img, (x, y))
@@ -131,7 +132,6 @@ class Soldier(pygame.sprite.Sprite):
         self.rect.center = (x, y)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-
 
     def update(self):
         self.update_animation()
@@ -208,7 +208,6 @@ class Soldier(pygame.sprite.Sprite):
 
         return screen_scroll
 
-
     def shoot(self):
         if self.shoot_cooldown == 0 and self.ammo > 0:
             self.shoot_cooldown = 20
@@ -217,10 +216,9 @@ class Soldier(pygame.sprite.Sprite):
             # reduce ammo
             self.ammo -= 1
 
-
     def ai(self):
         if self.alive and player.alive:
-            if self.idling == False and random.randint(1, 200) == 1:
+            if not self.idling and random.randint(1, 200) == 1:
                 self.update_action(0)  # 0: idle
                 self.idling = True
                 self.idling_counter = 50
@@ -232,8 +230,7 @@ class Soldier(pygame.sprite.Sprite):
                 self.shoot()
               #  pygame.draw.rect(screen, RED, self.vision, 1)
             else:
-
-                if self.idling == False:
+                if not self.idling:
                     if self.direction == 1:
                         ai_moving_right = True
                     else:
@@ -246,7 +243,6 @@ class Soldier(pygame.sprite.Sprite):
                     self.vision.center = (self.rect.centerx + 75 * self.direction, self.rect.centery)
                #     pygame.draw.rect(screen, RED, self.vision, 1)
 
-
                     if self.move_counter > TILE_SIZE:
                         self.direction *= -1
                         self.move_counter *= -1
@@ -255,10 +251,8 @@ class Soldier(pygame.sprite.Sprite):
                     if self.idling_counter <= 0:
                         self.idling = False
 
-
             # scroll
             self.rect.x += screen_scroll
-
 
     def update_animation(self):
         # update_animation
@@ -276,8 +270,6 @@ class Soldier(pygame.sprite.Sprite):
             else:
                 self.frame_index = 0
 
-
-
     def update_action(self, new_action):
         # check if the new action is different to the previous one
         if new_action != self.action:
@@ -285,9 +277,6 @@ class Soldier(pygame.sprite.Sprite):
             # update the animation settings
             self.frame_index = 0
             self.update_time = pygame.time.get_ticks()
-
-
-
 
     def check_alive(self):
         if self.health <= 0:
@@ -300,8 +289,7 @@ class Soldier(pygame.sprite.Sprite):
         screen.blit(pygame.transform.flip(self.image, self.flip, False), self.rect)
 
 
-
-class World():
+class World:
     def __init__(self):
         self.obstacle_list = []
 
@@ -344,7 +332,6 @@ class World():
                         exit_group.add(exit)
 
         return player, health_bar
-
 
     def draw(self):
         for tile in self.obstacle_list:
